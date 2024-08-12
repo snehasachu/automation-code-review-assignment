@@ -7,11 +7,17 @@ import time
 class Testcase101:
 
     def main(self):
+        # # Initialization should be moved to setUp method for better test management
+        # Remove usage of hardcoded Paths could be parameterized or set via environment variables
         driver = webdriver.Firefox(executable_path="C:\\Users\\Johny\\Downloads\\geckodriver-v0.33.0-win64\\geckodriver.exe")
         driver.get("https://interview.supporthive.com/staff/")
         driver.implicitly_wait(30)
         driver.maximize_window()
+
+        # Break down large methods into smaller,create separate methods for login, navigating to sections,adding new statuses and logout.
         driver.find_element(By.ID, "id_username").send_keys("Agent")
+
+        # Use config files or environment variables for credentials
         driver.find_element(By.ID, "id_password").send_keys("Agent@123")
         driver.find_element(By.ID, "btn-submit").click()
         tickets = driver.find_element(By.ID, "ember29")
@@ -26,7 +32,9 @@ class Testcase101:
         statusColourEnter = driver.find_element(By.XPATH, "//input[@class='sp-input']")
         statusColourEnter.clear()
         statusColourEnter.send_keys("#47963f")
+        # Robot class is not imported or used correctly
         r = Robot()
+        # KeyEvent is not imported or used correctly
         r.keyPress(KeyEvent.VK_ESCAPE)
         firstElement = driver.find_element(By.XPATH, "//a[@id='first-link']")
         firstElement.click()
@@ -35,10 +43,13 @@ class Testcase101:
         driver.find_element(By.TAG_NAME, "textarea").send_keys("Status when a new ticket is created in HappyFox")
         addCreate = driver.find_element(By.XPATH, "//button[@class ='hf-entity-footer_primary hf-primary-action ember-view']")
         addCreate.click()
+        # not recommended can lead to flaky tests better to use Selenium's WebDriverWait
         time.sleep(3)
+        
         moveTo = driver.find_element(By.XPATH, "//td[@class ='lt-cell align-center hf-mod-no-padding ember-view']")
         action.move_to_element(moveTo).perform()
         moveTo.click()
+        # not recommended better to use Selenium's WebDriverWait
         time.sleep(9)
         issue = driver.find_element(By.XPATH, "//div[contains(text(),'Issue Created')]")
         action.move_to_element(issue).perform()
@@ -50,6 +61,8 @@ class Testcase101:
         driver.find_element(By.TAG_NAME, "textarea").send_keys("Priority of the newly created tickets")
         button = driver.find_element(By.CSS_SELECTOR, "button[data-test-id='add-priority']")
         button.click()
+
+        # # not recommended better to use Selenium's WebDriverWait
         time.sleep(9)
         tickets2 = driver.find_element(By.ID, "ember29")
         action.move_to_element(tickets2).perform()
@@ -67,19 +80,22 @@ class Testcase101:
 class PagesforAutomationAssignment:
 
     def main(self):
+        # parameterize browser choice for flexibility for testing across different browsers
         driver = webdriver.Chrome()
         driver.get("https://www.happyfox.com")
 
+        # avoid hardcoded credentials for login
         loginPage = LoginPage(driver)
         loginPage.login("username", "password")
 
         homePage = HomePage(driver)
         homePage.verifyHomePage()
 
+        # Add tearDown method to close the driver after tests
         driver.quit()
 
 class BasePage:
-
+    # proper initialization in the BasePage class.
     def __init__(self, driver):
         self.driver = driver
 
