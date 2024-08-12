@@ -6,14 +6,13 @@ import time
 
 """
 General Recommendations:
-1. Config Driven parameters
-2. Modularity
-3. Use POM model
-4. Cross-browser Support
-5. Logging
-6. Missing Assert statements
-7. Error handling
-
+1. Config Driven parameters : Use configuration files or environment variables for URLs, paths, and credentials.
+2. Modularity : Break down large methods into smaller, reusable methods for better maintainability.
+3. Use POM model : Implement the Page Object Model (POM) to separate page-specific interactions from test logic.
+4. Cross-browser Support : Parameterize browser choice to enable testing across different browsers.
+5. Logging : Replace print statements with logging library for better traceability.
+6. Missing Assert statements : Add assert statements to validate test outcomes and ensure correctness.
+7. Error handling : Implement error handling to manage exceptions.
 """
 
 # Name of the test case can be specific 
